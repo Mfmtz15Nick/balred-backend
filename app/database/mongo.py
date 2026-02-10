@@ -15,8 +15,6 @@ class MongoDBClient:
         return cls._instance
 
     def _init_client(self, *args, **kwargs):
-        # uri = 'mongodb+srv://mfonseca:4jbRemCIoRhDIUWy@heatmapcluster.ouq6agc.mongodb.net/?retryWrites=true&w=majority&appName=HeatmapCluster'  # Replace with your actual MongoDB URI
-        # uri = 'mongodb+srv://balredroot:gJLFObX8hVtniFb5@cluster0.tkgfx2p.mongodb.net/?appName=Cluster0'
         uri = os.getenv('MONGO_URI')
         self.client = MongoClient(uri, server_api=ServerApi('1'))
         self.db = self.client['balred']  # Replace with your actual database name
