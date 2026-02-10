@@ -1,0 +1,21 @@
+# --- Archivos de Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Entornos Virtuales (¡NUNCA SUBAS ESTO!) ---
+venv/
+.venv/
+env/
+
+# --- Variables de Entorno y Secretos (¡PELIGRO!) ---
+.env
+.env.local
+config.py
+
+# --- Mac OS (Archivos basura del Finder) ---
+.DS_Store
+
+# --- IDEs ---
+.vscode/
+.idea/
