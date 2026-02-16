@@ -1,3 +1,6 @@
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import smtplib
 from requests import get
 from flask import jsonify, current_app
 
@@ -22,6 +25,27 @@ def get_users_service():
 def get_user_by_id_service(id):
     user = get(f'https://randomuser.me/api')
     return user.json()
+
+def send_email_service(email, name, lastName):
+    sender_email = "stivy3000@gmail.com"
+    sender_password = "bkutmtsdoxpqczhr"
+
+    subject = "Hola"
+    body = f"hola {name} {lastName}, khghjg"
+
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = email
+    message["Subject"] = subject
+
+    message.attach(MIMEText(body, "plain"))
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(sender_email, sender_password)
+    server.sendmail(sender_email, email, message.as_string())
+    server.quit()
+    
 
 def login_service(data):
     return True
