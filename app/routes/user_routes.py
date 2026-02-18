@@ -12,7 +12,7 @@ def get_users():
     
     return users
 
-@user_routes.route('/sendEmail', methods=['POST'])
+@user_routes.route('/send-email', methods=['POST'])
 def send_email():
     logger.debug('Enter send_email()')
 
@@ -24,11 +24,13 @@ def send_email():
     email = data.get('email')
     name = data.get('name')
     lastName = data.get('lastName')
+    company = data.get('company')
+    message = data.get('message')
 
     if not email:
         return jsonify({'success': False}), 400
 
-    resultado =send_email_service(email, name, lastName)
+    resultado =send_email_service(email, name, lastName, company, message)
     
     return jsonify({'success': resultado}), 200 if resultado else 500
 

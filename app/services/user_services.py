@@ -27,30 +27,34 @@ def get_user_by_id_service(id):
     user = get(f'https://randomuser.me/api')
     return user.json()
 
-def send_email_service(email, name, lastName):
+def send_email_service(email, name, lastName, company, message):
     try:
         sender_email = os.getenv('SMTP_GMAIL')
         sender_password = os.getenv('SMTP_PASSWORD')
+        
+        if not sender_email or not sender_password:
+            raise ValueError("SMTP credentials not configured")
+
 
         subject = "Hola"
-        body = f"hola {name} {lastName}, khghjg"
+        body = f"hola {name} {lastName}, {message}"
 
-        message = MIMEMultipart()
-        message["From"] = sender_email
-        message["To"] = email
-        message["Subject"] = subject
+        correo = MIMEMultipart()
+        correo["From"] = sender_email
+        correo["To"] = email
+        correo["Subject"] = subject
 
-        message.attach(MIMEText(body, "plain"))
+        correo.attach(MIMEText(body, "plain"))
 
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login(sender_email, sender_password)
-        server.sendmail(sender_email, email, message.as_string())
+        server.sendmail(sender_email, email, correo.as_string())
         server.quit()
     
         db = current_app.config['MONGO_DB']
         users_collection = db['prospectos']
-        users_collection.insert_one({"email": email, "name": name, "lastname": lastName})
+        users_collection.insert_one({"email": email, "name": name, "lastname": lastName, "company": company, "message": message})
         
         return True
     except Exception as e:
