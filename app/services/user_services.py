@@ -27,24 +27,34 @@ def get_user_by_id_service(id):
     return user.json()
 
 def send_email_service(email, name, lastName):
-    sender_email = "stivy3000@gmail.com"
-    sender_password = "bkutmtsdoxpqczhr"
+    try:
+        sender_email = "stivy3000@gmail.com"
+        sender_password = "bkutmtsdoxpqczhr"
 
-    subject = "Hola"
-    body = f"hola {name} {lastName}, khghjg"
+        subject = "Hola"
+        body = f"hola {name} {lastName}, khghjg"
 
-    message = MIMEMultipart()
-    message["From"] = sender_email
-    message["To"] = email
-    message["Subject"] = subject
+        message = MIMEMultipart()
+        message["From"] = sender_email
+        message["To"] = email
+        message["Subject"] = subject
 
-    message.attach(MIMEText(body, "plain"))
+        message.attach(MIMEText(body, "plain"))
 
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.starttls()
-    server.login(sender_email, sender_password)
-    server.sendmail(sender_email, email, message.as_string())
-    server.quit()
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, email, message.as_string())
+        server.quit()
+    
+        db = current_app.config['MONGO_DB']
+        users_collection = db['prospectos']
+        users_collection.insert_one({"email": email, "name": name, "lastname": lastName})
+        
+        return True
+    except Exception as e:
+        print(f"Error al enviar el correo: {e}")
+        return False
     
 
 def login_service(data):

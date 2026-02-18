@@ -26,11 +26,9 @@ def send_email():
     lastName = data.get('lastName')
 
     if not email:
-        return jsonify({'message': 'Email vacio'}), 400
+        return jsonify({'success': False}), 400
 
-    try:
-        send_email_service(email, name, lastName)
-        return jsonify({'message': 'Email Enviado'}), 200
-    except Exception as e:
-        logger.error(f'Error enviando email: {str(e)}')
-        return jsonify({'message': 'Error enviando email'}), 500
+    resultado =send_email_service(email, name, lastName)
+    
+    return jsonify({'success': resultado}), 200 if resultado else 500
+
