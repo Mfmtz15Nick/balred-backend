@@ -3,6 +3,7 @@ from email.mime.multipart import MIMEMultipart
 import smtplib
 from requests import get
 from flask import jsonify, current_app
+import os
 
 
 def create_user_service(data):
@@ -28,8 +29,8 @@ def get_user_by_id_service(id):
 
 def send_email_service(email, name, lastName):
     try:
-        sender_email = "stivy3000@gmail.com"
-        sender_password = "bkutmtsdoxpqczhr"
+        sender_email = os.getenv('SMTP_GMAIL')
+        sender_password = os.getenv('SMTP_PASSWORD')
 
         subject = "Hola"
         body = f"hola {name} {lastName}, khghjg"
