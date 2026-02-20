@@ -43,3 +43,22 @@ cp .env.example .env
 ```bash
 flask run
 ```
+## Docker
+
+### 1. Crear archivo de variables de entorno
+
+```bash
+cp .env.example .env
+```
+
+### 2. Levantar con Docker Compose
+
+```bash
+docker compose up --build
+```
+
+La API quedará disponible en:
+
+```text
+http://localhost:5000
+```
