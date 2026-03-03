@@ -38,11 +38,19 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Ejemplo minimo de `.env`:
+Ejemplo de `.env`:
 
 ```env
-# Requerida: conexion a MongoDB Atlas
+# Requeridas para que la API arranque
 MONGO_URI=mongodb+srv://usuario:password@cluster0.ejemplo.mongodb.net/balred?retryWrites=true&w=majority
+API_KEY=tu_api_key_aqui
+
+# Requeridas para endpoints que usan Postgres
+DATABASE_URL=postgresql://usuario:password@host:5432/database
+
+# Requeridas para endpoints de envio de correo
+SMTP_GMAIL=tu_correo@gmail.com
+SMTP_PASSWORD=tu_password_o_app_password
 
 # Recomendadas
 FLASK_ENV=development
@@ -52,6 +60,9 @@ SECRET_KEY=cambia_esta_clave_por_una_segura
 
 Variables necesarias para que arranque:
 - `MONGO_URI`: obligatoria. Sin esta variable la app no puede conectarse a MongoDB.
+- `API_KEY`: obligatoria para consumir rutas protegidas por `x-api-key`.
+- `DATABASE_URL`: obligatoria para endpoints que consultan/guardan en Postgres.
+- `SMTP_GMAIL` y `SMTP_PASSWORD`: obligatorias para endpoints que envian correo.
 - `FLASK_ENV`, `FLASK_APP`, `SECRET_KEY`: recomendadas para entorno local y configuracion general.
 
 ### 5. Correr proyecto
@@ -72,6 +83,10 @@ Usa este ejemplo en `.env` antes de levantar Docker:
 
 ```env
 MONGO_URI=mongodb+srv://usuario:password@cluster0.ejemplo.mongodb.net/balred?retryWrites=true&w=majority
+API_KEY=tu_api_key_aqui
+DATABASE_URL=postgresql://usuario:password@host:5432/database
+SMTP_GMAIL=tu_correo@gmail.com
+SMTP_PASSWORD=tu_password_o_app_password
 FLASK_ENV=development
 FLASK_APP=app
 SECRET_KEY=cambia_esta_clave_por_una_segura
