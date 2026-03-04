@@ -22,15 +22,15 @@ def create_app():
     #     app.config.from_object('app.config.DevelopmentConfig')
 
     # Database configuration
-    mongo_client = create_mongo_client()
+    # mongo_client = create_mongo_client()
     
-    if not ping_mongo():
-        raise RuntimeError('Failed to connect to MongoDB')
-    else:
-        print('Mongo was connected! :D ')
+    # if not ping_mongo():
+        #raise RuntimeError('Failed to connect to MongoDB')
+    #else:
+        #print('Mongo was connected! :D ')
     
-    app.config['MONGO_CLIENT'] = mongo_client
-    app.config['MONGO_DB'] = mongo_client.get_db()
+    #app.config['MONGO_CLIENT'] = mongo_client
+    #app.config['MONGO_DB'] = mongo_client.get_db()
 
     # Routes
     from .routes.user_routes import user_routes
