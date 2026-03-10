@@ -10,7 +10,7 @@ user_routes = Blueprint('user_routes', __name__, url_prefix='/api/users')
 @limiter.limit("10 per hour")
 @require_api_key
 def get_users():
-    logger.debug('Enter get_users() ')
+
     
     users = get_users_postgres_service() 
     
@@ -20,7 +20,7 @@ def get_users():
 @limiter.limit("5 per hour")
 @require_api_key
 def send_email():
-    logger.debug('Enter send_email()')
+   
 
     data = request.get_json()
 
