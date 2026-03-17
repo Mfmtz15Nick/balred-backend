@@ -38,20 +38,24 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Ejemplo minimo de `.env`:
+Ejemplo de `.env`:
 
 ```env
-# Requerida: conexion a MongoDB Atlas
-MONGO_URI=mongodb+srv://usuario:password@cluster0.ejemplo.mongodb.net/balred?retryWrites=true&w=majority
-
-# Recomendadas
-FLASK_ENV=development
 FLASK_APP=app
+FLASK_ENV=development
 SECRET_KEY=cambia_esta_clave_por_una_segura
+API_KEY=tu_api_key_aqui
+DATABASE_URL=postgresql://usuario:password@host:5432/database
+SMTP_GMAIL=tu_correo@gmail.com
+SMTP_PASSWORD=tu_app_password
+SMTP_TO_EMAIL=destinatario@tudominio.com
 ```
 
 Variables necesarias para que arranque:
-- `MONGO_URI`: obligatoria. Sin esta variable la app no puede conectarse a MongoDB.
+- `API_KEY`: obligatoria para consumir rutas protegidas.
+- `DATABASE_URL`: obligatoria para consultas e inserciones en PostgreSQL.
+- `SMTP_GMAIL` y `SMTP_PASSWORD`: obligatorias para enviar correos.
+- `SMTP_TO_EMAIL`: opcional. Si no se define, se usa `SMTP_GMAIL` como destinatario.
 - `FLASK_ENV`, `FLASK_APP`, `SECRET_KEY`: recomendadas para entorno local y configuracion general.
 
 ### 5. Correr proyecto
@@ -71,10 +75,14 @@ cp .env.example .env
 Usa este ejemplo en `.env` antes de levantar Docker:
 
 ```env
-MONGO_URI=mongodb+srv://usuario:password@cluster0.ejemplo.mongodb.net/balred?retryWrites=true&w=majority
-FLASK_ENV=development
 FLASK_APP=app
+FLASK_ENV=development
 SECRET_KEY=cambia_esta_clave_por_una_segura
+API_KEY=tu_api_key_aqui
+DATABASE_URL=postgresql://usuario:password@host:5432/database
+SMTP_GMAIL=tu_correo@gmail.com
+SMTP_PASSWORD=tu_app_password
+SMTP_TO_EMAIL=destinatario@tudominio.com
 ```
 
 ### 2. Levantar con Docker Compose

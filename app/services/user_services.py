@@ -21,9 +21,12 @@ def send_email_postgres_service(email, name, lastname, company, message):
     try:
         sender_email = os.getenv('SMTP_GMAIL')
         sender_password = os.getenv('SMTP_PASSWORD')
+        recipient_email = os.getenv('SMTP_TO_EMAIL') or sender_email
         
         if not sender_email or not sender_password:
             raise ValueError("SMTP credentials not configured")
+        if not recipient_email:
+            raise ValueError("SMTP recipient not configured")
 
 
         subject = f"Solicitud de contacto de {name} {lastname} de parte de {company}"
@@ -31,7 +34,7 @@ def send_email_postgres_service(email, name, lastname, company, message):
 
         correo = MIMEMultipart()
         correo["From"] = sender_email
-        correo["To"] = sender_email
+        correo["To"] = recipient_email
         correo["Subject"] = subject
         
         correo.attach(MIMEText(body, "plain"))
@@ -39,7 +42,7 @@ def send_email_postgres_service(email, name, lastname, company, message):
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login(sender_email, sender_password)
-        server.sendmail(sender_email, sender_email, correo.as_string())
+        server.sendmail(sender_email, recipient_email, correo.as_string())
         server.quit()
         
         insert_prospecto(name, lastname, email, company, message)
